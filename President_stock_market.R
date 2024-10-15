@@ -4,7 +4,7 @@ library(ggplot2)
 library(lubridate)
 
 # Read the CSV file
-data <- fread("C:/Users/maxwe/Downloads/stock_market_data_1871_2024.csv")
+data <- fread("./stock_market_data_1871_2024.csv")
 data$Date = sprintf("%-7s", as.character(data$Date)) %>% str_replace(" ", "0")
 
 # Convert Date column to Date type
@@ -13,7 +13,7 @@ data = data[, c(1, 8)]
 names(data) = c("Date", "Price")
 
 # Define presidents and their terms
-presidents <- read_csv("C:/Users/maxwe/Downloads/president_timelines.csv")
+presidents <- read_csv("./president_timelines.csv")
 presidents <- as.data.frame(lapply(presidents, function(x) gsub('"', '', x)), stringsAsFactors = FALSE)
 names(presidents) = c("Index", "Name", "TermBegin", "TermEnd")
 
@@ -49,9 +49,9 @@ presidents = presidents[-5, ]
 
 
 # Read the CSV files
-president_heights <- read_csv("C:/Users/maxwe/Downloads/president_heights.csv")
+president_heights <- read_csv("./president_heights.csv")
 president_heights = president_heights[19:45, ]
-president_ratings <- read_csv("C:/Users/maxwe/Downloads/president_ratings.csv")
+president_ratings <- read_csv("./president_ratings.csv")
 president_ratings = president_ratings[19:45, ]
 presidents$age = c(54, 49, 51, 47, 55, 55, 54, 42, 51, 56, 55, 51, 54, 51, 60, 62, 43, 55, 56, 61, 52, 69, 64, 46, 54, 47, 70)
 presidents$major_war = factor(c(0,0,0,0,0,0,1,0,0,1,0,0,0,1,1,0,0,1,1,0,0,0,1,0,1,1,0))
@@ -171,7 +171,7 @@ party_plot = party_plot + annotate(
 )
 party_plot
 
-ggsave(party_plot, filename = "C:/Users/maxwe/OneDrive/Documents/R Projects/presidents_stock_market/party_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
+ggsave(party_plot, filename = "./party_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
 
 ################################################################################################################################################################
 
@@ -202,7 +202,7 @@ date = ggplot(price_data_labeled, aes(x = Date, y = (Price), color = Party, grou
   guides(color = guide_legend(override.aes = list(alpha = 1)),
          alpha = "none")
 date
-ggsave(date, filename = "C:/Users/maxwe/OneDrive/Documents/R Projects/presidents_stock_market/date.jpeg", width = 9, height = 7, units = "in", dpi = 500)
+ggsave(date, filename = "./date.jpeg", width = 9, height = 7, units = "in", dpi = 500)
 
 ################################################################################################################################################################
 
@@ -246,6 +246,8 @@ war_plot = war_plot + annotate(
   hjust = -0.1, vjust = 1.1,
   size = 3
 )
+war_plot
+ggsave(war_plot, filename = "./war_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
 
 ################################################################################################################################################################
 
@@ -289,6 +291,8 @@ claude_plot = claude_plot + annotate(
   hjust = -0.1, vjust = 1.1,
   size = 3
 )
+claude_plot
+ggsave(claude_plot, filename = "./claude_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
 
 ################################################################################################################################################################
 
@@ -308,7 +312,7 @@ height_plot = ggplot(price_data_labeled, aes(x = MonthsSinceTermStart, y = Relat
     segment.color = 'grey50',
     show.legend = FALSE
   ) +
-  scale_color_manual(values = c("0" = "forestgreen", "1" = "red")) +
+  scale_color_manual(values = c("1" = "forestgreen", "0" = "red")) +
   labs(title = "Relative Price Changes During Presidential Terms",
        x = "Months Since Term Start",
        y = "Relative Price (Start of Term = 100)",
@@ -332,6 +336,8 @@ height_plot = height_plot + annotate(
   hjust = -0.1, vjust = 1.1,
   size = 3
 )
+height_plot
+ggsave(height_plot, filename = "./height_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
 
 
 ################################################################################################################################################################
@@ -376,3 +382,5 @@ age_plot = age_plot + annotate(
   hjust = -0.1, vjust = 1.1,
   size = 3
 )
+age_plot
+ggsave(age_plot, filename = "./age_plot.jpeg", width = 9, height = 7, units = "in", dpi = 500)
